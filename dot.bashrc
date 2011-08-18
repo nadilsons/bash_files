@@ -41,8 +41,7 @@ export HISTSIZE=1000
 export HISTFILESIZE=2000
 export PS1='\[\e[01;33m\]\u\[\e[01;37m\]@\[\e[01;36m\]\h\[\e[01;37m\]:\[\e[01;34m\]\w\[\033[31m\]$(git_branch_name)\[\e[0m\]\$ ' 
 export GIT_EDITOR=$EDITOR
-#export PS1="\[\033[01;32m\]\u@\h:\[\033[01;34m\]\w\[\033[31m\]\$(git_branch_name)\[\033[m\]$ "
-#export CLICOLOR="auto"
+export CLICOLOR="auto"
 shopt -s histappend
 shopt -s checkwinsize
 shopt -s cdspell       # corrects dir names
@@ -110,7 +109,16 @@ fi
 # global functions
 #=======================================================================================================================================================
 function ws() {
-	cd ~/workspace/$1
+        if [ $1 = 'update_all' ]; then
+		echo -e '\e[1;33m========>>>>>>>>>>-------------------------------<<<<<<<<<<========\e[0m'
+		echo -e '\e[33m========>>>>>>>>>>\e[0m \e[5;31mAtualizando TODOS os projetos\e[0m \e[33m<<<<<<<<<<========\e[0m'
+		echo -e '\e[33m========>>>>>>>>>>-------------------------------<<<<<<<<<<========\e[0m\e[36m'
+		cd ~/workspace
+		ls -1 | while read line; do cd $line; pwd; git pull; cd ..; done;
+		echo -e '\e[1;33m========>>>>>>>>>>-------------------------------<<<<<<<<<<========\e[0m'
+	else
+		cd ~/workspace/$1
+	fi
 }
 
 function git_branch_name() {

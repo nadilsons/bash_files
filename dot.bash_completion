@@ -19,7 +19,7 @@ _ws() {
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
 
-    local projects=$(ls -1 ~/workspace) 
+    local projects=$(ls -1 ~/workspace && echo update_all) 
     COMPREPLY=( $(compgen -W "${projects}" -- ${cur}) )
 }
 complete -F _ws ws
