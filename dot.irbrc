@@ -33,7 +33,7 @@ IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb-history"
 
 # auto-indent
 IRB.conf[:AUTO_INDENT]=true
-puts "Auto-indent on."
+#puts "Auto-indent on."
  
 # Log to STDOUT if in Rails
 if ENV.include?('RAILS_ENV') && !Object.const_defined?('RAILS_DEFAULT_LOGGER')
@@ -44,7 +44,7 @@ end
 # try to load rubygems
 begin
   require "rubygems"
-  puts "Rubygems loaded."
+  #puts "Rubygems loaded."
 rescue LoadError => e
   puts "Seems you don't have Rubygems installed: #{e}"
 end
@@ -52,14 +52,14 @@ end
 # let there be colors
 # just use Wirble for colors, since some enviroments dont have
 # rubygems and wirble installed
-#begin
-#  require "wirble"
-#  Wirble.init(:skip_prompt=>true,:skip_history=>true)
-#  Wirble.colorize
-#  puts "Wirble loaded. Now you have colors."
-#rescue LoadError => e
-#  puts "Seems you don't have Wirble installed: #{e}"
-#end
+begin
+  require "wirble"
+  Wirble.init(:skip_prompt=>true,:skip_history=>true)
+  Wirble.colorize
+  #puts "Wirble loaded. Now you have colors."
+rescue LoadError => e
+  puts "Seems you don't have Wirble installed: #{e}"
+end
  
 # method for load factory_girl
 def load_factory
@@ -67,7 +67,7 @@ def load_factory
     require "faker"
     require "factory_girl"
     Dir.glob('test/factories/*_factory.rb').each { |file| require file }
-    puts "Factory_girl loaded."
+    #puts "Factory_girl loaded."
   rescue LoadError => e
     puts "Seems you don't have factory_girl installed: #{e}"
   end
