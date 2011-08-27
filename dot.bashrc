@@ -42,8 +42,8 @@ export HISTFILESIZE=2000
 export PS1='\[\e[01;33m\]\u\[\e[01;37m\]@\[\e[01;36m\]\h\[\e[01;37m\]:\[\e[01;34m\]\w\[\033[31m\]$(git_branch_name)\[\e[0m\]\$ ' 
 export GIT_EDITOR=$EDITOR
 export CLICOLOR="auto"
-shopt -s histappend
-shopt -s checkwinsize
+shopt -s histappend    # append to the history file, don't overwrite it
+shopt -s checkwinsize  # check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
 shopt -s cdspell       # corrects dir names
 
 # make less more friendly for non-text input files, see lesspipe(1)
