@@ -124,3 +124,7 @@ function ws() {
 function git_branch_name() {
 	git branch 2>/dev/null | grep -e '^*' | sed -E 's/^\* (.+)$/(\1)/'
 }
+
+say() { 
+	mplayer "http://translate.google.com/translate_tts?q=$1"; 
+}
