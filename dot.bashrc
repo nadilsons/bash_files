@@ -18,6 +18,8 @@ else
 	export EDITOR="mvim"
 	export ARCHFLAGS="-arch x86_64"                
 	export PATH="/usr/local/bin:/usr/local/sbin:/opt/local/bin:/usr/local/mysql/bin:$PATH"
+        
+	alias jmeter="sh ~/Documents/jmeter/bin/jmeter &"
 
 	# functions
 	function pkill() {
@@ -123,8 +125,4 @@ function ws() {
 
 function git_branch_name() {
 	git branch 2>/dev/null | grep -e '^*' | sed -E 's/^\* (.+)$/(\1)/'
-}
-
-say() { 
-	mplayer "http://translate.google.com/translate_tts?q=$1"; 
 }
