@@ -10,7 +10,6 @@ _csshx() {
     local clusters=$( grep clusters ~/.csshrc | awk -F= '{print $2}' | tr ' ' "\n" | sort -r | uniq )
     COMPREPLY=( $(compgen -W "${clusters}" -- ${cur}) )
 }
-complete -F _csshx csshx
 complete -F _csshx csshX
 
 
