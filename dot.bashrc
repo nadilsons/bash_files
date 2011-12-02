@@ -19,8 +19,9 @@ else
 	export ARCHFLAGS="-arch x86_64"                
 	export PATH="/usr/local/bin:/usr/local/sbin:/opt/local/bin:/usr/local/mysql/bin:$PATH"
         
-	alias jmeter="sh ~/Documents/jmeter/bin/jmeter &"
-
+	alias jmeter="sh ~/Documents/jmeter/2.5/bin/jmeter &"
+	alias jmeter24="sh ~/Documents/jmeter/2.4/bin/jmeter &"
+	
 	# functions
 	function pkill() {
 		local pid
