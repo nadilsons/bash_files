@@ -21,7 +21,10 @@ else
         
 	alias jmeter="sh ~/Documents/jmeter/2.5/bin/jmeter &"
 	alias jmeter24="sh ~/Documents/jmeter/2.4/bin/jmeter &"
-	
+        
+        # Load RVM function	
+	[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+
 	# functions
 	function pkill() {
 		local pid
@@ -42,7 +45,7 @@ export GREP_COLOR="4;31"
 export HISTCONTROL=ignoredups:ignorespace
 export HISTSIZE=1000
 export HISTFILESIZE=2000
-export PS1='\[\e[01;33m\]\u\[\e[01;37m\]@\[\e[01;36m\]\h\[\e[01;37m\]:\[\e[01;34m\]\w\[\033[31m\]$(git_branch_name)\[\e[0m\]\$ ' 
+export PS1='\[\e[01;33m\]\u\[\e[01;37m\]@\[\e[01;36m\]\h\[\e[01;37m\]:\[\e[01;34m\]\w\[\033[31m\]$(dev_environment)\[\e[0m\]\$ ' 
 export GIT_EDITOR=$EDITOR
 export CLICOLOR="auto"
 shopt -s histappend    # append to the history file, don't overwrite it
@@ -124,6 +127,45 @@ function ws() {
 	fi
 }
 
-function git_branch_name() {
-	git branch 2>/dev/null | grep -e '^*' | sed -E 's/^\* (.+)$/(\1)/'
+function dev_environment() {
+	local retorno=$(git branch 2>/dev/null | grep -e '^*' | sed -E 's/^\* (.+)$/\1/')
+	local rvm_prompt=$(rvm-prompt i)
+	if [ ! -z $retorno ]; then
+		if [ ! -z $rvm_prompt ]; then
+			echo "($retorno|$rvm_prompt)"
+		else
+			echo "($retorno)"
+		fi
+	fi
 }
+
+##=========================
+#function detect_rvm_version {
+#  local gemset=$(echo $GEM_HOME | awk -F'@' '{print $2}')
+#  [ "$gemset" != "" ] && gemset="@$gemset"
+#  local version=$(echo $MY_RUBY_HOME | awk -F'-' '{print $2}')
+#  [ "$version" != "" ] && version="$version"
+#  local full="$version$gemset"
+#  [ "$full" != "" ] && echo "$full"
+#}
+#
+#function detect_git_dirty {
+#  local git_status=$(git status 2>&1 | tail -n1)
+#  [[ $git_status != "fatal: Not a git repository (or any of the parent directories): .git" ]] && [[ $git_status != "nothing to commit (working directory clean)" ]] && echo "*"
+#}
+#
+#function detect_git_branch {
+#  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1/"
+#}
+#
+#function dev_info {
+#  echo "[$(detect_rvm_version) $(detect_git_branch)$(detect_git_dirty)]"
+#}
+#
+## Colors
+#txtred='\e[0;31m' # Red
+#txtwht='\e[0;37m' # White
+#txtrst='\e[0m'    # Text Reset
+#
+## Custom command prompt
+#export PS1="\[$txtwht\]\w \[$txtred\]\$(dev_info) \[$txtrst\]"
