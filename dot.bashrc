@@ -128,15 +128,21 @@ function ws() {
 }
 
 function dev_environment() {
-	local retorno=$(git branch 2>/dev/null | grep -e '^*' | sed -E 's/^\* (.+)$/\1/')
+	local git_branch=$(git branch 2>/dev/null | grep -e '^*' | sed -E 's/^\* (.+)$/\1/')
 	local rvm_prompt=$(rvm-prompt i)
-	if [ ! -z $retorno ]; then
+
+	if [ ! -z $git_branch ]; then
 		if [ ! -z $rvm_prompt ]; then
-			echo "($retorno|$rvm_prompt)"
+			echo "($git_branch$(detect_git_dirty)|$rvm_prompt)"
 		else
-			echo "($retorno)"
+			echo "($git_branch$(detect_git_dirty))"
 		fi
 	fi
+}
+
+function detect_git_dirty {
+  local git_status=$(git status 2>&1 | tail -n1)
+  [[ $git_status != "fatal: Not a git repository (or any of the parent directories): .git" ]] && [[ $git_status != "nothing to commit (working directory clean)" ]] && echo "*"
 }
 
 ##=========================
@@ -149,11 +155,6 @@ function dev_environment() {
 #  [ "$full" != "" ] && echo "$full"
 #}
 #
-#function detect_git_dirty {
-#  local git_status=$(git status 2>&1 | tail -n1)
-#  [[ $git_status != "fatal: Not a git repository (or any of the parent directories): .git" ]] && [[ $git_status != "nothing to commit (working directory clean)" ]] && echo "*"
-#}
-#
 #function detect_git_branch {
 #  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1/"
 #}
@@ -161,11 +162,11 @@ function dev_environment() {
 #function dev_info {
 #  echo "[$(detect_rvm_version) $(detect_git_branch)$(detect_git_dirty)]"
 #}
-#
+
 ## Colors
 #txtred='\e[0;31m' # Red
 #txtwht='\e[0;37m' # White
 #txtrst='\e[0m'    # Text Reset
 #
-## Custom command prompt
+# Custom command prompt
 #export PS1="\[$txtwht\]\w \[$txtred\]\$(dev_info) \[$txtrst\]"
