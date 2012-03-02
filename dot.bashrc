@@ -34,7 +34,6 @@ else
 
 	# auto complete
 	source ~/.git_completion
-	complete -cf sudo
 fi
 
 #=======================================================================================================================================================
@@ -51,6 +50,7 @@ export CLICOLOR="auto"
 shopt -s histappend    # append to the history file, don't overwrite it
 shopt -s checkwinsize  # check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
 shopt -s cdspell       # corrects dir names
+complete -cf sudo
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -114,6 +114,14 @@ fi
 #=======================================================================================================================================================
 # global functions
 #=======================================================================================================================================================
+#function rake() { 
+#	if [ -e ./Gemfile.lock ]; then 
+#		bundle exec rake "$@"; 
+#	else 
+#		/usr/bin/env rake "$@"; 
+#	fi; 
+#}
+
 function ws() {
         if [[ $1 = 'update_all' ]]; then
 		echo -e '\e[1;33m========>>>>>>>>>>-------------------------------<<<<<<<<<<========\e[0m'
