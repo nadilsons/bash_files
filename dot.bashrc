@@ -6,7 +6,8 @@ if [[ $OSTYPE == 'linux-gnu' ]]; then
     # specific linux settings
     #===================================================================================================================================================
     # see /usr/share/doc/bash/examples/startup-files for examples
-    export EDITOR="nano"
+    export EDITOR="vim"
+    export PATH="~/.bin:$PATH"
 
     # Add an "alert" alias for long running commands.  Use like so: sleep 10; alert
     alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
@@ -46,6 +47,7 @@ export HISTSIZE=1000
 export HISTFILESIZE=2000
 export PS1='\[\e[01;33m\]\u\[\e[01;37m\]@\[\e[01;36m\]\h\[\e[01;37m\]:\[\e[01;34m\]\w\[\033[31m\]$(dev_environment)\[\e[0m\]\$ ' 
 export GIT_EDITOR=$EDITOR
+export GEM_HOME=~/.gem
 export CLICOLOR="auto"
 shopt -s histappend    # append to the history file, don't overwrite it
 shopt -s checkwinsize  # check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
@@ -137,14 +139,14 @@ function ws() {
 
 function dev_environment() {
     local git_branch=$(git branch 2>/dev/null | grep -e '^*' | sed -E 's/^\* (.+)$/\1/')
-    local rvm_prompt=$(rvm-prompt i)
+    #local rvm_prompt=$(rvm-prompt i)
 
     if [ ! -z $git_branch ]; then
-        if [ ! -z $rvm_prompt ]; then
-            echo "($git_branch$(detect_git_dirty)|$rvm_prompt)"
-        else
+    #    if [ ! -z $rvm_prompt ]; then
+    #        echo "($git_branch$(detect_git_dirty)|$rvm_prompt)"
+    #    else
             echo "($git_branch$(detect_git_dirty))"
-        fi
+    #    fi
     fi
 }
 
