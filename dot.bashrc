@@ -23,7 +23,7 @@ else
     alias jmeter="sh ~/Documents/jmeter/2.5/bin/jmeter &"
     alias jmeter24="sh ~/Documents/jmeter/2.4/bin/jmeter &"
         
-        # Load RVM function    
+    # Load RVM function    
     [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 
     # functions
