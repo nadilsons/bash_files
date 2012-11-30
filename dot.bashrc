@@ -7,7 +7,6 @@ if [[ $OSTYPE == 'linux-gnu' ]]; then
     #===================================================================================================================================================
     # see /usr/share/doc/bash/examples/startup-files for examples
     export EDITOR="vim"
-    export PATH="~/.bin:$PATH"
 
     # Add an "alert" alias for long running commands.  Use like so: sleep 10; alert
     alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
@@ -20,7 +19,8 @@ else
     export ARCHFLAGS="-arch x86_64"                
     export PATH="/usr/local/bin:/usr/local/sbin:/opt/local/bin:/usr/local/Cellar/mysql/5.1.54/bin:$PATH"
         
-    alias jmeter="sh ~/Documents/jmeter/2.5/bin/jmeter &"
+    alias jmeter="sh ~/Documents/jmeter/2.6/bin/jmeter &"
+    alias jmeter25="sh ~/Documents/jmeter/2.5/bin/jmeter &"
     alias jmeter24="sh ~/Documents/jmeter/2.4/bin/jmeter &"
         
     # Load RVM function    
@@ -139,14 +139,14 @@ function ws() {
 
 function dev_environment() {
     local git_branch=$(git branch 2>/dev/null | grep -e '^*' | sed -E 's/^\* (.+)$/\1/')
-    #local rvm_prompt=$(rvm-prompt i)
+    local rvm_prompt=$(rvm-prompt i v)
 
     if [ ! -z $git_branch ]; then
-    #    if [ ! -z $rvm_prompt ]; then
-    #        echo "($git_branch$(detect_git_dirty)|$rvm_prompt)"
-    #    else
+        if [ ! -z $rvm_prompt ]; then
+            echo "($git_branch$(detect_git_dirty)|$rvm_prompt)"
+        else
             echo "($git_branch$(detect_git_dirty))"
-    #    fi
+        fi
     fi
 }
 
