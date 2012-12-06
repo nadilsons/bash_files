@@ -17,8 +17,10 @@ else
     # export
     export EDITOR="mvim"
     export ARCHFLAGS="-arch x86_64"                
-    export PATH="/usr/local/bin:/usr/local/sbin:/opt/local/bin:/usr/local/Cellar/mysql/5.1.54/bin:$PATH"
-        
+    export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+    #export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+    export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+
     alias jmeter="sh ~/Documents/jmeter/2.6/bin/jmeter &"
     alias jmeter25="sh ~/Documents/jmeter/2.5/bin/jmeter &"
     alias jmeter24="sh ~/Documents/jmeter/2.4/bin/jmeter &"
@@ -91,14 +93,6 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-# All commands have been installed with the prefix 'g'.
-# But note that sourcing these aliases will cause them to be used instead of Bash built-in commands, which may cause problems in shell scripts.
-# The Bash "printf" built-in behaves differently than gprintf, for instance, which is known to cause problems with "bash-completion".
-# The man pages are still referenced with the g-prefix
-if [ -f /usr/local/Cellar/coreutils/8.7/aliases ]; then
-    source /usr/local/Cellar/coreutils/8.7/aliases
-fi
-
 #=======================================================================================================================================================
 # global auto complete
 #=======================================================================================================================================================
@@ -152,7 +146,7 @@ function dev_environment() {
 
 function detect_git_dirty {
   local git_status=$(git status 2>&1 | tail -n1)
-  [[ $git_status != "fatal: Not a git repository (or any of the parent directories): .git" ]] && [[ $git_status != "nothing to commit (working directory clean)" ]] && echo "*"
+  [[ $git_status != "fatal: Not a git repository (or any of the parent directories): .git" ]] && [[ $git_status != "nothing to commit, working directory clean" ]] && echo "*"
 }
 
 ##=========================
