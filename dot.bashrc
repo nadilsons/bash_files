@@ -6,7 +6,7 @@ if [[ $OSTYPE == 'linux-gnu' ]]; then
     # specific linux settings
     #===================================================================================================================================================
     # see /usr/share/doc/bash/examples/startup-files for examples
-    export EDITOR="vim"
+    export EDITOR="gvim"
 
     # Add an "alert" alias for long running commands.  Use like so: sleep 10; alert
     alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
@@ -18,13 +18,8 @@ else
     export EDITOR="mvim"
     export ARCHFLAGS="-arch x86_64"                
     export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-    #export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
     export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
-    alias jmeter="sh ~/Documents/jmeter/2.6/bin/jmeter &"
-    alias jmeter25="sh ~/Documents/jmeter/2.5/bin/jmeter &"
-    alias jmeter24="sh ~/Documents/jmeter/2.4/bin/jmeter &"
-        
     # Load RVM function    
     [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 
