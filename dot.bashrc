@@ -130,8 +130,8 @@ function dev_environment() {
     local git_branch=$(git branch 2>/dev/null | grep -e '^*' | sed -E 's/^\* (.+)$/\1/')
     local rvm_prompt=$(rvm-prompt i v)
 
-    if [ ! -z $git_branch ]; then
-        if [ ! -z $rvm_prompt ]; then
+    if [[ ! -z $git_branch ]]; then
+        if [[ ! -z $rvm_prompt ]]; then
             echo "($git_branch$(detect_git_dirty)|$rvm_prompt)"
         else
             echo "($git_branch$(detect_git_dirty))"
