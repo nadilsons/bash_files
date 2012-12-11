@@ -127,7 +127,7 @@ function ws() {
 }
 
 function dev_environment() {
-    local git_branch=$(git branch 2>/dev/null | grep -e '^*' | sed -E 's/^\* ?\((.+)?\)$/\1/')
+    local git_branch=$(git branch 2>/dev/null | grep -e '^*' | sed -E 's/^\* (.+)$/\1/')
     local rvm_prompt=$(rvm-prompt i v)
 
     if [[ ! -z $git_branch ]]; then
