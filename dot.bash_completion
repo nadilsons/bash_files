@@ -1,3 +1,5 @@
+complete -W "$(echo `vagrant --help | awk '/box/,/up/ {print $1}'`;)" vagrant
+
 _csshx() {
     local cur prev opts base
     COMPREPLY=()
