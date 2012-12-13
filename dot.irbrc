@@ -72,3 +72,5 @@ def load_factory
     puts "Seems you don't have factory_girl installed: #{e}"
   end
 end
+
+# vim: set ft=ruby
