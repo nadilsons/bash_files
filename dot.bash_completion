@@ -1,4 +1,4 @@
-complete -W "$(echo `vagrant --help | awk '/box/,/up/ {print $1}'`;)" vagrant
+source ~/.vagrant_completion
 
 _csshx() {
     local cur prev opts base
