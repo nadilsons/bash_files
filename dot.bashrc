@@ -14,7 +14,6 @@ else
     #===================================================================================================================================================
     # specific macbook settings
     #===================================================================================================================================================
-    # export
     export EDITOR="mvim"
     export ARCHFLAGS="-arch x86_64"                
     export PATH="/usr/local/opt/coreutils/libexec/gnubin:~/.gem/bin:$PATH"
@@ -169,3 +168,5 @@ function detect_git_dirty {
 #
 # Custom command prompt
 #export PS1="\[$txtwht\]\w \[$txtred\]\$(dev_info) \[$txtrst\]"
+
+# vim:ft=sh
