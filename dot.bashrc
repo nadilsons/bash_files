@@ -15,12 +15,15 @@ else
     # specific macbook settings
     #===================================================================================================================================================
     export EDITOR="mvim"
-    export ARCHFLAGS="-arch x86_64"                
+    export ARCHFLAGS="-arch x86_64"
     export PATH="/usr/local/opt/coreutils/libexec/gnubin:~/.gem/bin:$PATH"
     export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
-    # Load RVM function    
+    # Load RVM function
     [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+
+    # jmeter
+    alias jmeter='~/Documents/jmeter/2.8/bin/jmeter &'
 
     # functions
     function pkill() {
@@ -31,6 +34,7 @@ else
 
     # auto complete
     source ~/.git_completion
+    source $(brew --repository)/Library/Contributions/brew_bash_completion.sh
 fi
 
 #=======================================================================================================================================================
@@ -41,13 +45,13 @@ export GREP_COLOR="4;31"
 export HISTCONTROL=ignoredups:ignorespace
 export HISTSIZE=1000
 export HISTFILESIZE=2000
-export PS1='\[\e[01;33m\]\u\[\e[01;37m\]@\[\e[01;36m\]\h\[\e[01;37m\]:\[\e[01;34m\]\w\[\033[31m\]$(dev_environment)\[\e[0m\]\$ ' 
+export PS1='\[\e[01;33m\]\u\[\e[01;37m\]@\[\e[01;36m\]\h\[\e[01;37m\]:\[\e[01;34m\]\w\[\033[31m\]$(dev_environment)\[\e[0m\]\$ '
 export GIT_EDITOR=$EDITOR
 export GEM_HOME=~/.gem
 export CLICOLOR="auto"
 shopt -s histappend    # append to the history file, don't overwrite it
 shopt -s checkwinsize  # check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
-shopt -s cdspell       # corrects dir names
+shopt -s cdspell       # corrects dir names mistakes in the cd command
 complete -cf sudo
 
 # make less more friendly for non-text input files, see lesspipe(1)
@@ -67,18 +71,6 @@ esac
 if [ -f ~/.dircolors ]; then
     . ~/.dircolors;
 fi
-
-# uncomment for a colored prompt, if the terminal has the capability; turned off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt force_color_prompt=yes
-#if [ -n "$force_color_prompt" ]; then
-#    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-#        # We have color support; assume it's compliant with Ecma-48 (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-#        # a case would tend to support setf rather than setaf.)
-#        color_prompt=yes
-#    else
-#        color_prompt=
-#    fi
-#fi
 
 #=======================================================================================================================================================
 # global aliases
@@ -104,12 +96,12 @@ fi
 #=======================================================================================================================================================
 # global functions
 #=======================================================================================================================================================
-#function rake() { 
-#    if [ -e ./Gemfile.lock ]; then 
-#        bundle exec rake "$@"; 
+#function rake() {
+#    if [ -e ./Gemfile.lock ]; then
+#        bundle exec rake "$@";
 #    else 
-#        /usr/bin/env rake "$@"; 
-#    fi; 
+#        /usr/bin/env rake "$@";
+#    fi;
 #}
 
 function ws() {
@@ -169,4 +161,4 @@ function detect_git_dirty {
 # Custom command prompt
 #export PS1="\[$txtwht\]\w \[$txtred\]\$(dev_info) \[$txtrst\]"
 
-# vim:ft=sh
+# vim:ft=sh:tabstop=4:shiftwidth=4:
