@@ -4,7 +4,6 @@ _csshx() {
     local cur prev opts base
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
-    prev="${COMP_WORDS[COMP_CWORD-1]}"
 
     # Complete from ~/.csshrc, if exists
     [ -e ~/.csshrc ] || return 0
@@ -14,9 +13,8 @@ _csshx() {
 }
 complete -F _csshx csshX
 
-
 _ws() {
-    local cur prev 
+    local cur
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
 
@@ -25,4 +23,17 @@ _ws() {
 }
 complete -F _ws ws
 
-# vim:ft=sh:
+_bundle() {
+    local cur=${COMP_WORDS[COMP_CWORD]}
+    local prev=${COMP_WORDS[COMP_CWORD-1]}
+    local items="update show open exec install package config check list outdated console viz init gem platform"
+
+    if [[ ( "$prev" = "update" ) || ( "$prev" = "show" ) || ( "$prev" = "open" ) ]]; then
+        items=$(bundle list |  grep "*" | cut -d " " -f4) 
+    fi
+
+    COMPREPLY=( $(compgen -W "${items}" -- ${cur}) )
+}
+complete -F _bundle bundle
+
+# vim:ft=sh:tabstop=4:shiftwidth=4
