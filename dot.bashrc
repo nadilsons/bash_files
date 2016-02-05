@@ -16,15 +16,23 @@ else
     # specific macbook settings
     #===================================================================================================================================================
     export EDITOR="mvim"
-    export ARCHFLAGS="-arch x86_64"
+    #export ARCHFLAGS="-arch x86_64"
     export PATH="/usr/local/opt/coreutils/libexec/gnubin:~/.gem/bin:$PATH"
     export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
+    # mac docker setup
+    export DOCKER_HOST=tcp://192.168.59.103:2376
+    export DOCKER_CERT_PATH=~/.boot2docker/certs/boot2docker-vm
+    export DOCKER_TLS_VERIFY=1
+
+    # nvm config
+    if [ -f "$(brew --prefix nvm)/nvm.sh"  ]; then
+        source $(brew --prefix nvm)/nvm.sh;
+        export NVM_DIR=~/.nvm
+    fi
+
     # Load RVM function
     [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
-
-    # jmeter
-    alias jmeter='~/Documents/jmeter/2.8/bin/jmeter &'
 
     # functions
     function pkill() {
@@ -48,7 +56,7 @@ export HISTSIZE=1000
 export HISTFILESIZE=2000
 export PS1='\[\e[01;33m\]\u\[\e[01;37m\]@\[\e[01;36m\]\h\[\e[01;37m\]:\[\e[01;34m\]\w\[\033[31m\]$(dev_environment)\[\e[0m\]\$ '
 export GIT_EDITOR=$EDITOR
-export GEM_HOME=~/.gem
+#export GEM_HOME=~/.gem
 export CLICOLOR="auto"
 shopt -s histappend    # append to the history file, don't overwrite it
 shopt -s checkwinsize  # check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
@@ -125,7 +133,10 @@ function ws() {
 
 function dev_environment() {
     local git_branch=$(git branch 2>/dev/null | grep -e '^*' | sed -E 's/^\* (.+)$/\1/')
-    local rvm_prompt=$(rvm-prompt i v)
+
+    if which rvm-prompt >/dev/null; then
+        local rvm_prompt=$(rvm-prompt i v)
+    fi
 
     if [[ ! -z $git_branch ]]; then
         if [[ ! -z $rvm_prompt ]]; then
