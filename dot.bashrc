@@ -17,13 +17,11 @@ else
     #===================================================================================================================================================
     export EDITOR="mvim"
     #export ARCHFLAGS="-arch x86_64"
-    export PATH="/usr/local/opt/coreutils/libexec/gnubin:~/.gem/bin:$PATH"
+    export PATH="/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:~/.gem/bin:$PATH"
     export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
     # mac docker setup
-    export DOCKER_HOST=tcp://192.168.59.103:2376
-    export DOCKER_CERT_PATH=~/.boot2docker/certs/boot2docker-vm
-    export DOCKER_TLS_VERIFY=1
+    [[ $(docker-machine status) == 'Running' ]] && eval $(docker-machine env default);
 
     # nvm config
     if [ -f "$(brew --prefix nvm)/nvm.sh"  ]; then
