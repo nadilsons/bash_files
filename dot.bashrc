@@ -17,7 +17,7 @@ else
     #===================================================================================================================================================
     export EDITOR="mvim"
     #export ARCHFLAGS="-arch x86_64"
-    export PATH="/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:~/.gem/bin:$PATH"
+    export PATH="/usr/local/opt/coreutils/libexec/gnubin:~/.gem/bin:$PATH"
     export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
     # mac docker setup
