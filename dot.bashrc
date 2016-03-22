@@ -120,6 +120,48 @@ function ws() {
     fi
 }
 
+function server() {
+    ruby -e '
+    require "yaml"
+
+    applications = YAML.load_file("servers.yml")
+    app_name = ARGV.shift
+    env_name = ARGV.shift
+
+    def yellow(msg)
+      "\033[33;33m#{msg}\033[0m"
+    end
+
+    def red(msg)
+      "\033[33;31m#{msg}\033[0m"
+    end
+
+    def exit_with_message(msg)
+      puts msg
+      exit 1
+    end
+
+    exit_with_message "usage: server [application] [environment{index}]" if app_name.nil? or env_name.nil?
+
+    application = applications[app_name]
+    exit_with_message "#{red("application not found")}\navaliable applications are #{yellow(applications.keys)}" if application.nil?
+
+    servers = application[env_name]
+    if servers.nil?
+      msg = "environment #{red(env_name)} not found for application #{yellow(app_name)}\navaliable environments are #{yellow(application.keys)}"
+
+      server_and_index = env_name.match(/^(\D{1,})(\d{1,}$)/)
+      exit_with_message msg if server_and_index.nil?
+
+      servers = Array(application[server_and_index[1]][server_and_index[2].to_i.pred])
+      exit_with_message msg if servers.nil?
+    end
+
+    cmd = servers.count == 1 ? :ssh : :csshX
+    puts "accessing #{yellow(servers)}..."
+    system "#{cmd} #{(servers + ARGV).join(" ")}"' $@
+}
+
 function dev_environment() {
     local git_branch=$(git branch 2>/dev/null | grep -e '^*' | sed -E 's/^\* (.+)$/\1/')
 
