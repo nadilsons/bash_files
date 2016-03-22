@@ -103,18 +103,9 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-#complete -C ~/.rake_cap_bash_completion -o default rake
-
 #=======================================================================================================================================================
 # global functions
 #=======================================================================================================================================================
-#function rake() {
-#    if [ -e ./Gemfile.lock ]; then
-#        bundle exec rake "$@";
-#    else
-#        env rake "$@";
-#    fi;
-#}
 
 function ws() {
     if [[ $1 = 'update_all' ]]; then
@@ -149,31 +140,5 @@ function detect_git_dirty {
   local git_status=$(git status 2>&1 | tail -n1)
   [[ $git_status != "fatal: Not a git repository (or any of the parent directories): .git" ]] && [[ $git_status != "nothing to commit, working directory clean" ]] && echo "*"
 }
-
-##=========================
-#function detect_rvm_version {
-#  local gemset=$(echo $GEM_HOME | awk -F'@' '{print $2}')
-#  [ "$gemset" != "" ] && gemset="@$gemset"
-#  local version=$(echo $MY_RUBY_HOME | awk -F'-' '{print $2}')
-#  [ "$version" != "" ] && version="$version"
-#  local full="$version$gemset"
-#  [ "$full" != "" ] && echo "$full"
-#}
-#
-#function detect_git_branch {
-#  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1/"
-#}
-#
-#function dev_info {
-#  echo "[$(detect_rvm_version) $(detect_git_branch)$(detect_git_dirty)]"
-#}
-
-## Colors
-#txtred='\e[0;31m' # Red
-#txtwht='\e[0;37m' # White
-#txtrst='\e[0m'    # Text Reset
-#
-# Custom command prompt
-#export PS1="\[$txtwht\]\w \[$txtred\]\$(dev_info) \[$txtrst\]"
 
 # vim:ft=sh:tabstop=4:shiftwidth=4:
