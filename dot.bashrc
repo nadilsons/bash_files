@@ -124,7 +124,7 @@ function server() {
     ruby -e '
     require "yaml"
 
-    applications = YAML.load_file("servers.yml")
+    applications = YAML.load_file("#{Dir.home}/.servers.yml")
     app_name = ARGV.shift
     env_name = ARGV.shift
 
@@ -158,7 +158,7 @@ function server() {
     end
 
     cmd = servers.count == 1 ? :ssh : :csshX
-    puts "accessing #{yellow(servers)}..."
+    puts "accessing server(s) #{yellow(servers)}..."
     system "#{cmd} #{(servers + ARGV).join(" ")}"' $@
 }
 
