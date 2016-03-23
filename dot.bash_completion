@@ -21,6 +21,21 @@ _ws() {
 }
 complete -F _ws ws
 
+_server() {
+    local cur="${COMP_WORDS[COMP_CWORD]}"
+    local prev=${COMP_WORDS[COMP_CWORD-1]}
+
+    if [[ "$prev" == "server" ]]; then
+        local projects=$(ruby -e 'require "yaml"; puts YAML.load_file("#{Dir.home}/.servers.yml").keys.join(" ") rescue ""')
+    else
+        local projects=$(ruby -e "require 'yaml'; puts YAML.load_file(\"#{Dir.home}/.servers.yml\")['$prev'].keys.join(' ') rescue ''")
+    fi
+
+    COMPREPLY=()
+    COMPREPLY=( $(compgen -W "${projects}" -- ${cur}) )
+}
+complete -F _server server
+
 _bundle() {
     local cur=${COMP_WORDS[COMP_CWORD]}
     local prev=${COMP_WORDS[COMP_CWORD-1]}
