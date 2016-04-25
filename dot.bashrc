@@ -144,7 +144,7 @@ function server() {
       server_and_index = env_name.match(/^(\D{1,})(\d{1,}$)/)
       exit_with_message msg if server_and_index.nil?
 
-      servers = Array(application[server_and_index[1]][server_and_index[2].to_i.pred])
+      servers = Array(application[server_and_index[1]][server_and_index[2].to_i.pred]) rescue nil
       exit_with_message msg if servers.nil?
     end
 
