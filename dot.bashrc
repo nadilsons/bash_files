@@ -40,8 +40,7 @@ else
     }
 
     # auto complete
-    source ~/.git_completion
-    source $(brew --repository)/Library/Contributions/brew_bash_completion.sh
+    [[ -f $(brew --prefix)/etc/bash_completion ]] && . $(brew --prefix)/etc/bash_completion
 fi
 
 #=======================================================================================================================================================
@@ -75,28 +74,20 @@ case "$TERM" in
 esac
 
 # enable color support to coreutils and darwin default shell
-if [ -f ~/.dircolors ]; then
-    . ~/.dircolors;
-fi
+[[ -f ~/.dircolors ]] && . ~/.dircolors;
 
 # set github api token for homebrew
-if [ -f ~/.github_api_token ]; then
-    . ~/.github_api_token
-fi
+[[ -f ~/.github_api_token ]] && . ~/.github_api_token
 
 #=======================================================================================================================================================
 # global aliases
 #=======================================================================================================================================================
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
+[[ -f ~/.bash_aliases ]] && . ~/.bash_aliases
 
 #=======================================================================================================================================================
 # global auto complete
 #=======================================================================================================================================================
-if [ -f ~/.bash_completion ]; then
-    . ~/.bash_completion;
-fi
+[[ -f ~/.bash_completion ]] && . ~/.bash_completion;
 
 # enable programmable completion features (you don't need to enable this, if it's already enabled in /etc/bash.bashrc and /etc/profile sources /etc/bash.bashrc).
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
