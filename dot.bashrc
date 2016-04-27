@@ -145,10 +145,10 @@ function server() {
       exit_with_message msg if server_and_index.nil?
 
       servers = Array(application[server_and_index[1]][server_and_index[2].to_i.pred]) rescue nil
-      exit_with_message msg if servers.nil?
+      exit_with_message msg if servers.nil? or servers.empty?
     end
 
-    cmd = servers.count == 1 ? :ssh : :csshX
+    cmd = servers.one? ? :ssh : :csshX
     puts "accessing server(s) #{yellow(servers)}..."
     system "#{cmd} #{(servers + ARGV).join(" ")}"' $@
 }
