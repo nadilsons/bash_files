@@ -118,6 +118,7 @@ function server() {
     applications = YAML.load_file("#{Dir.home}/.servers.yml")
     app_name = ARGV.shift
     env_name = ARGV.shift
+    opt_host = ARGV.shift if ARGV.include? "--host"
 
     def yellow(msg)
       "\033[33;33m#{msg}\033[0m"
@@ -148,8 +149,8 @@ function server() {
       exit_with_message msg if servers.nil? or servers.empty?
     end
 
-    cmd = servers.one? ? :ssh : :csshX
-    puts "accessing server(s) #{yellow(servers)}..."
+    cmd = opt_host ? "echo" : servers.one? ? :ssh : :csshX
+    puts "accessing server(s) #{yellow(servers)}..." unless opt_host
     system "#{cmd} #{(servers + ARGV).join(" ")}"' $@
 }
 
