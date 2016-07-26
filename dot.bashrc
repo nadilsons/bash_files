@@ -111,6 +111,14 @@ function ws() {
     fi
 }
 
+function jdk() {
+    local cmd="/usr/libexec/java_home"
+    [[ $# -gt 0 ]] && local cmd="$cmd -v 1.$@"
+
+    export JAVA_HOME=`$cmd`
+    java -version
+}
+
 function server() {
     ruby -e '
     require "yaml"
