@@ -180,7 +180,7 @@ function dev_environment() {
 
 function detect_git_dirty {
   local git_status=$(git status 2>&1 | tail -n1)
-  [[ $git_status != "fatal: Not a git repository (or any of the parent directories): .git" ]] && [[ $git_status != "nothing to commit, working directory clean" ]] && echo "*"
+  [[ $git_status != "fatal: Not a git repository (or any of the parent directories): .git" ]] && [[ $git_status != "nothing to commit, working tree clean" ]] && echo "*"
 }
 
 # vim:ft=sh:tabstop=4:shiftwidth=4:
