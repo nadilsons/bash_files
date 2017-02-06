@@ -17,8 +17,13 @@ else
     #===================================================================================================================================================
     export EDITOR="mvim"
     #export ARCHFLAGS="-arch x86_64"
-    export PATH="/usr/local/opt/coreutils/libexec/gnubin:~/.gem/bin:$PATH"
+    export PATH="/usr/local/opt/coreutils/libexec/gnubin:~/.gem/bin:/usr/local/sbin:$PATH"
     export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+
+    export ORACLE_HOME=~/instantclient
+    export DYLD_LIBRARY_PATH=$ORACLE_HOME:$LD_LIBRARY_PATH
+    export NLS_LANG=American_America.UTF8
+    export PATH=$ORACLE_HOME:$PATH
 
     # mac docker setup
     [[ $(docker-machine status) == 'Running' ]] && eval $(docker-machine env default);
