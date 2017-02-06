@@ -175,6 +175,35 @@ function dev_environment() {
     fi
 }
 
+function vpn() {
+    local VPNName="VPN terremark"
+    local isnt_connected=`scutil --nc status "$VPNName" | sed -n 1p | grep -v Connected`
+
+    if [[ ! -z $isnt_connected ]]; then
+        echo "Using VPN service: $VPNName"
+        local pass=`security -q find-generic-password -gl pass 2>&1  | egrep '^password' | awk -F\" '{print $2}'`
+        local token=`security -q find-generic-password -gl token 2>&1  | egrep '^password' | awk -F\" '{print $2}'`
+        local suffix=`ruby -e "require 'rotp'; puts ROTP::TOTP.new('$token').now"`
+
+        local vpn_pass="$pass$suffix"
+
+        scutil --nc start "$VPNName"
+
+        sleep 2.5
+        # workaround osascript keystroke bug
+        #osascript -e "tell application \"System Events\" to keystroke \"$vpn_pass\""
+        echo $vpn_pass | grep -o . | while read char; do
+          osascript -e "tell application \"System Events\" to keystroke \"$char\""
+        done
+        osascript -e "tell application \"System Events\" to keystroke return"
+
+        sleep 2
+        osascript -e "tell application \"System Events\" to keystroke return"
+    else
+        echo "Already Connected to VPN..."
+    fi
+}
+
 function _language() {
     local cwd=$PWD
 
