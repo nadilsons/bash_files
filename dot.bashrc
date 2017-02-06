@@ -170,17 +170,29 @@ function server() {
 function dev_environment() {
     local git_branch=$(git branch 2>/dev/null | grep -e '^*' | sed -E 's/^\* (.+)$/\1/')
 
-    if which rvm-prompt >/dev/null; then
-        local rvm_prompt=$(rvm-prompt i v)
-    fi
-
     if [[ ! -z $git_branch ]]; then
-        if [[ ! -z $rvm_prompt ]]; then
-            echo "($git_branch$(detect_git_dirty)|$rvm_prompt)"
-        else
-            echo "($git_branch$(detect_git_dirty))"
-        fi
+        echo "($git_branch$(detect_git_dirty)$(_language))"
     fi
+}
+
+function _language() {
+    local cwd=$PWD
+
+    while [ $cwd != $HOME ]; do
+        if [ -e "$cwd/pom.xml" ]; then
+            echo "|java";
+            break;
+        elif [ -e "$cwd/Gemfile" ]; then
+            if which rvm-prompt >/dev/null; then
+                echo "|$(rvm-prompt i v)"
+            else
+                echo "|ruby";
+            fi
+            break;
+        fi
+
+        cwd=`dirname "$cwd"`
+    done
 }
 
 function detect_git_dirty {
