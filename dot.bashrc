@@ -55,7 +55,7 @@ export HISTSIZE=1000
 export HISTFILESIZE=2000
 export PS1='\[\e[01;33m\]\u\[\e[01;37m\]@\[\e[01;36m\]\h\[\e[01;37m\]:\[\e[01;34m\]\w\[\033[31m\]$(dev_environment)\[\e[0m\]\$ '
 export GIT_EDITOR=$EDITOR
-#export GEM_HOME=~/.gem
+export GEM_HOME=~/.gem
 export CLICOLOR="auto"
 shopt -s histappend    # append to the history file, don't overwrite it
 shopt -s checkwinsize  # check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
@@ -173,7 +173,7 @@ function dev_environment() {
 }
 
 function vpn() {
-    local VPNName="VPN terremark"
+    if [ "$1" == 'dfw' ]; then local VPNName='VPN DFW'; else local VPNName='VPN terremark'; fi
     local isnt_connected=`scutil --nc status "$VPNName" | sed -n 1p | grep -v Connected`
 
     if [[ ! -z $isnt_connected ]]; then
@@ -204,7 +204,7 @@ function vpn() {
 function _language() {
     local cwd=$PWD
 
-    while [ $cwd != $HOME ]; do
+    while [ $cwd != "/" ]; do
         if [ -e "$cwd/pom.xml" ]; then
             echo "|java";
             break;
