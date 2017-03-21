@@ -25,9 +25,6 @@ else
     export NLS_LANG=American_America.UTF8
     export PATH=$ORACLE_HOME:$PATH
 
-    # mac docker setup
-    [[ $(docker-machine status) == 'Running' ]] && eval $(docker-machine env default);
-
     # nvm config
     if [ -f "$(brew --prefix nvm)/nvm.sh"  ]; then
         source $(brew --prefix nvm)/nvm.sh;
