@@ -16,7 +16,6 @@ else
     # specific macbook settings
     #===================================================================================================================================================
     export EDITOR="mvim"
-    #export ARCHFLAGS="-arch x86_64"
     export PATH="/usr/local/opt/coreutils/libexec/gnubin:~/.gem/bin:/usr/local/sbin:$PATH"
     export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
@@ -168,7 +167,7 @@ function dev_environment() {
     local git_branch=$(git branch 2>/dev/null | grep -e '^*' | sed -E 's/^\* (.+)$/\1/')
 
     if [[ ! -z $git_branch ]]; then
-        echo "($git_branch$(detect_git_dirty)$(_language))"
+        echo "($git_branch$(detect_git_dirty))"
     fi
 }
 
@@ -199,26 +198,6 @@ function vpn() {
     else
         echo "Already Connected to VPN..."
     fi
-}
-
-function _language() {
-    local cwd=$PWD
-
-    while [ $cwd != "/" ]; do
-        if [ -e "$cwd/pom.xml" ]; then
-            echo "|java";
-            break;
-        elif [ -e "$cwd/Gemfile" ]; then
-            if which rvm-prompt >/dev/null; then
-                echo "|$(rvm-prompt i v)"
-            else
-                echo "|ruby";
-            fi
-            break;
-        fi
-
-        cwd=`dirname "$cwd"`
-    done
 }
 
 function detect_git_dirty {
