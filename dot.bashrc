@@ -105,7 +105,13 @@ function ws() {
         echo -e '\033[1;33m========>>>>>>>>>>\033[0m \033[5;31m  Updating ALL projects  \033[0m \033[1;33m<<<<<<<<<<========\033[0m'
         echo -e '\033[1;33m========>>>>>>>>>>---------------------------<<<<<<<<<<========\033[0m'
         cd ~/workspace
-        ls -1 | while read line; do cd $line; pwd; git pull; cd ..; done;
+        ls -1 | while read line; do
+            if [[ -d "$line/.git" ]]; then
+                cd $line; pwd; git pull; cd ..;
+            else
+                echo "$line is not git repo";
+           fi
+        done;
         echo -e '\033[1;33m========>>>>>>>>>>-------------------------------<<<<<<<<<<========\033[0m'
     else
         cd ~/workspace/$1
