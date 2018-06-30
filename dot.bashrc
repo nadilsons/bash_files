@@ -118,22 +118,41 @@ function ws() {
     fi
 }
 
-function jdk() {
-    local cmd="/usr/libexec/java_home"
-    [[ $# -gt 0 ]] && local cmd="$cmd -v 1.$@"
-
-    export JAVA_HOME=`$cmd`
-    java -version
+function token() {
+    local _secret=`_config token $1`
+    ruby -e "require 'rotp'; puts ROTP::TOTP.new('$_secret').now"
 }
 
-function server() {
+function mfa() {
+    source ~/.aws/mfa.sh -p $1 `token $1`
+}
+
+function cluster() {
+    local _jumpbox=`_config jumpbox $1`
+    local pem="$HOME/.ssh/cluster_$1.pem"
+
+    ssh-add $pem
+    ssh -i $pem -A ec2-user@$_jumpbox
+}
+
+function vpn() {
+    local VPNName='TapInfluence VPN'
+    local isnt_connected=`scutil --nc status "$VPNName" | sed -n 1p | grep -v Connected`
+
+    if [[ ! -z $isnt_connected ]]; then
+        scutil --nc start "$VPNName"
+    else
+        echo "Already Connected to VPN..."
+    fi
+}
+
+function _config() {
     ruby -e '
     require "yaml"
 
-    applications = YAML.load_file("#{Dir.home}/.servers.yml")
-    app_name = ARGV.shift
+    yaml_file = YAML.load_file("#{Dir.home}/.servers.yml")
+    type_name = ARGV.shift
     env_name = ARGV.shift
-    opt_host = ARGV.shift if ARGV.include? "--host"
 
     def yellow(msg)
       "\033[33;33m#{msg}\033[0m"
@@ -148,25 +167,18 @@ function server() {
       exit 1
     end
 
-    exit_with_message "usage: server [application] [environment{index}]" if app_name.nil? or env_name.nil?
+    exit_with_message "usage: server [type] [environment]" if type_name.nil? or env_name.nil?
 
-    application = applications[app_name]
-    exit_with_message "#{red("application not found")}\navaliable applications are #{yellow(applications.keys)}" if application.nil?
+    type = yaml_file[type_name]
+    exit_with_message "#{red("type not found")}\navaliable types are #{yellow(yaml_file.keys)}" if type.nil?
 
-    servers = application[env_name]
-    if servers.nil?
-      msg = "environment #{red(env_name)} not found for application #{yellow(app_name)}\navaliable environments are #{yellow(application.keys)}"
-
-      server_and_index = env_name.match(/^(\D{1,})(\d{1,}$)/)
-      exit_with_message msg if server_and_index.nil?
-
-      servers = Array(application[server_and_index[1]][server_and_index[2].to_i.pred]) rescue nil
-      exit_with_message msg if servers.nil? or servers.empty?
+    value = type[env_name]
+    if value.nil?
+      msg = "environment #{red(env_name)} not found for type #{yellow(type_name)}\navaliable environments are #{yellow(type.keys)}"
+      exit_with_message msg if value.nil? or value.empty?
     end
 
-    cmd = opt_host ? "echo" : servers.one? ? :ssh : :csshX
-    puts "accessing server(s) #{yellow(servers)}..." unless opt_host
-    system "#{cmd} #{(servers + ARGV).join(" ")}"' $@
+    puts value' $@
 }
 
 function dev_environment() {
@@ -174,35 +186,6 @@ function dev_environment() {
 
     if [[ ! -z $git_branch ]]; then
         echo "($git_branch$(detect_git_dirty))"
-    fi
-}
-
-function vpn() {
-    if [ "$1" == 'dfw' ]; then local VPNName='VPN DFW'; else local VPNName='VPN terremark'; fi
-    local isnt_connected=`scutil --nc status "$VPNName" | sed -n 1p | grep -v Connected`
-
-    if [[ ! -z $isnt_connected ]]; then
-        echo "Using VPN service: $VPNName"
-        local pass=`security -q find-generic-password -gl pass 2>&1  | egrep '^password' | awk -F\" '{print $2}'`
-        local token=`security -q find-generic-password -gl token 2>&1  | egrep '^password' | awk -F\" '{print $2}'`
-        local suffix=`ruby -e "require 'rotp'; puts ROTP::TOTP.new('$token').now"`
-
-        local vpn_pass="$pass$suffix"
-
-        scutil --nc start "$VPNName"
-
-        sleep 2.5
-        # workaround osascript keystroke bug
-        #osascript -e "tell application \"System Events\" to keystroke \"$vpn_pass\""
-        echo $vpn_pass | grep -o . | while read char; do
-          osascript -e "tell application \"System Events\" to keystroke \"$char\""
-        done
-        osascript -e "tell application \"System Events\" to keystroke return"
-
-        sleep 2
-        osascript -e "tell application \"System Events\" to keystroke return"
-    else
-        echo "Already Connected to VPN..."
     fi
 }
 
