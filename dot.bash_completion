@@ -21,20 +21,21 @@ _ws() {
 }
 complete -F _ws ws
 
-_server() {
+_cluster() {
     local cur="${COMP_WORDS[COMP_CWORD]}"
     local prev=${COMP_WORDS[COMP_CWORD-1]}
 
-    if [[ "$prev" == "server" ]]; then
-        local projects=$(ruby -e 'require "yaml"; puts YAML.load_file("#{Dir.home}/.servers.yml").keys.join(" ") rescue ""')
-    else
-        local projects=$(ruby -e "require 'yaml'; puts YAML.load_file(\"#{Dir.home}/.servers.yml\")['$prev'].keys.join(' ') rescue ''")
-    fi
+    #if [[ "$prev" == "server" ]]; then
+    #    local projects=$(ruby -e 'require "yaml"; puts YAML.load_file("#{Dir.home}/.servers.yml").keys.join(" ") rescue ""')
+    #else
+    #    local projects=$(ruby -e "require 'yaml'; puts YAML.load_file(\"#{Dir.home}/.servers.yml\")['$prev'].keys.join(' ') rescue ''")
+    #fi
+    local items="prod qa logstash"
 
     COMPREPLY=()
-    COMPREPLY=( $(compgen -W "${projects}" -- ${cur}) )
+    COMPREPLY=( $(compgen -W "${items}" -- ${cur}) )
 }
-complete -F _server server
+complete -F _cluster cluster
 
 _bundle() {
     local cur=${COMP_WORDS[COMP_CWORD]}
@@ -47,29 +48,16 @@ _bundle() {
 
     COMPREPLY=( $(compgen -W "${items}" -- ${cur}) )
 }
-#complete -F _bundle bundle
+complete -F _bundle bundle
 
-###-begin-yo-completion-###
-if type complete &>/dev/null; then
-    _yo_completion () {
-        local words cword
-        if type _get_comp_words_by_ref &>/dev/null; then
-            _get_comp_words_by_ref -n = -n @ -w words -i cword
-        else
-            cword="$COMP_CWORD"
-            words=("${COMP_WORDS[@]}")
-        fi
+_mfa() {
+    local cur="${COMP_WORDS[COMP_CWORD]}"
+    local prev=${COMP_WORDS[COMP_CWORD-1]}
+    local items="tap-prod tap-dev tap-newdev"
 
-        local si="$IFS"
-        IFS=$'\n' COMPREPLY=($(COMP_CWORD="$cword" \
-            COMP_LINE="$COMP_LINE" \
-            COMP_POINT="$COMP_POINT" \
-            yo-complete completion -- "${words[@]}" \
-            2>/dev/null)) || return $?
-        IFS="$si"
-    }
-    complete -o default -F _yo_completion yo
-fi
-###-end-yo-completion-###
+    COMPREPLY=( $(compgen -W "$items" -- ${cur}) )
+}
+complete -F _mfa mfa
+complete -F _mfa token
 
 # vim:ft=sh:tabstop=4:shiftwidth=4
