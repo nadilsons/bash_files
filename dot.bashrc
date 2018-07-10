@@ -19,11 +19,6 @@ else
     export PATH="/usr/local/opt/coreutils/libexec/gnubin:~/.gem/bin:/usr/local/sbin:$PATH"
     export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
-    export ORACLE_HOME=~/instantclient
-    export DYLD_LIBRARY_PATH=$ORACLE_HOME:$LD_LIBRARY_PATH
-    export NLS_LANG=American_America.UTF8
-    export PATH=$ORACLE_HOME:$PATH
-
     # nvm config
     if [ -f "$(brew --prefix nvm)/nvm.sh"  ]; then
         source $(brew --prefix nvm)/nvm.sh;
