@@ -6,24 +6,23 @@ if [[ $OSTYPE == 'linux-gnu' ]]; then
     # specific linux settings
     #===================================================================================================================================================
     # see /usr/share/doc/bash/examples/startup-files for examples
-    export EDITOR="gvim"
-    PATH=$PATH:$HOME/.rvm/bin
-
-    # Add an "alert" alias for long running commands.  Use like so: sleep 10; alert
-    alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+    export EDITOR="vim"
 else
     #===================================================================================================================================================
     # specific macbook settings
     #===================================================================================================================================================
     export EDITOR="mvim"
-    export PATH="/usr/local/opt/coreutils/libexec/gnubin:~/.gem/bin:/usr/local/sbin:$PATH"
+    export PATH="/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/ruby/bin:~/.gem/bin:/usr/local/sbin:$PATH"
     export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+    export DOCKER_HOST="tcp://skynet:2375"
+    export BASH_SILENCE_DEPRECATION_WARNING=1
 
-    # nvm config
-    if [ -f "$(brew --prefix nvm)/nvm.sh"  ]; then
-        source $(brew --prefix nvm)/nvm.sh;
-        export NVM_DIR=~/.nvm
-    fi
+    ## nvm config
+    #if [ -f "$(brew --prefix nvm)/nvm.sh"  ]; then
+    #    source $(brew --prefix nvm)/nvm.sh;
+    #    #[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+    #    export NVM_DIR=~/.nvm
+    #fi
 
     # Load RVM function
     [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
@@ -93,6 +92,7 @@ fi
 #=======================================================================================================================================================
 # global functions
 #=======================================================================================================================================================
+[[ -f ~/.bash_functions ]] && . ~/.bash_functions;
 
 function ws() {
     if [[ $1 = 'update_all' ]]; then
