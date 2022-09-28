@@ -11,8 +11,12 @@ else
     #===================================================================================================================================================
     # specific macbook settings
     #===================================================================================================================================================
+    # enable brew
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+
     export EDITOR="mvim"
-    export PATH="/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/ruby/bin:~/.gem/bin:/usr/local/sbin:$PATH"
+    #export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:/opt/homebrew/opt/ruby/bin:~/.gem/bin:/usr/local/sbin:$PATH"
+    export PATH="`brew --prefix coreutils`/libexec/gnubin:`brew --prefix ruby`/bin:~/.gem/bin:/usr/local/sbin:$PATH"
     export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
     export DOCKER_HOST="tcp://skynet:2375"
     export BASH_SILENCE_DEPRECATION_WARNING=1
