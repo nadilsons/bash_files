@@ -1,0 +1,28 @@
+# ~/.config/ghostty/config
+
+# ─── Shell Integration ───
+shell-integration = "zsh"
+shell-integration-features = true
+
+# ─── Font Configuration ───
+#font-family = "DejaVuSansM Nerd Font"
+font-family = "DejaVuSansM Nerd Font Mono"
+font-style = "Bold"
+font-size = 18
+
+# ─── Theme ───
+theme = "GitHub-Dark-Dimmed"
+#theme = "OneHalfDark"
+
+# ─── Window Padding ───
+window-padding-x = 8
+window-padding-y = 8
+window-padding-balance = true
+
+# ─── Background Opacity & Blur ───
+background-opacity = 1.0
+background-blur-radius = 0
+
+# ─── Cursor ───
+cursor-style = "block"
+cursor-style-blink = true
