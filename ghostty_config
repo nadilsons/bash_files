@@ -34,3 +34,6 @@ background-blur-radius = 0
 # ─── Cursor ───
 cursor-style = "block"
 cursor-style-blink = true
+
+# ─── Shortcut ───
+keybind = "cmd+.=text:\x03"
