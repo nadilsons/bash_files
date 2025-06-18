@@ -7,12 +7,20 @@ shell-integration-features = true
 # ─── Font Configuration ───
 #font-family = "DejaVuSansM Nerd Font"
 font-family = "DejaVuSansM Nerd Font Mono"
-font-style = "Bold"
+#font-style = "Bold"
 font-size = 18
 
 # ─── Theme ───
 theme = "GitHub-Dark-Dimmed"
 #theme = "OneHalfDark"
+#theme = "Everblush"
+###
+#theme = "rebecca"
+#theme = "Mirage"
+###
+#theme = "Galaxy"
+#theme = "Mariana"
+#theme = "tokyonight_moon"
 
 # ─── Window Padding ───
 window-padding-x = 8
