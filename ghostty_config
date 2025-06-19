@@ -5,10 +5,10 @@ shell-integration = "zsh"
 shell-integration-features = true
 
 # ─── Font Configuration ───
-#font-family = "DejaVuSansM Nerd Font"
-font-family = "DejaVuSansM Nerd Font Mono"
-#font-style = "Bold"
+font-family = "DejaVuSansM Nerd Font"
+#font-family = "DejaVuSansM Nerd Font Mono"
 font-size = 18
+#font-style = "Bold"
 
 # ─── Theme ───
 theme = "GitHub-Dark-Dimmed"
