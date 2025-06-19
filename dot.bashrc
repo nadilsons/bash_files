@@ -2,6 +2,8 @@
 if [[ $OSTYPE == 'linux-gnu' ]]; then
     # Linux-specific configurations
     export EDITOR="vim"
+
+    [[ -f ~/.dircolors ]] && . ~/.dircolors;
 else
     # macOS-specific configurations (MacBook)
     eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -26,8 +28,6 @@ shopt -s histappend    # append to the history file, don't overwrite it
 shopt -s checkwinsize  # check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
 shopt -s cdspell       # corrects dir names mistakes in the cd command
 complete -cf sudo
-
-#[[ -f ~/.dircolors ]] && . ~/.dircolors;
 
 # global aliases
 [[ -f ~/.bash_aliases ]] && . ~/.bash_aliases
