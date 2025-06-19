@@ -9,6 +9,7 @@ else
     eval "$(/opt/homebrew/bin/brew shellenv)"
 
     export EDITOR="mvim"
+    export PATH="`brew --prefix coreutils`/libexec/gnubin:$PATH"
     export DOCKER_HOST="tcp://skynet:2375"
     export PROMPT_COMMAND='echo -ne "\033]0;$(basename "$PWD")\007"'
     export BASH_SILENCE_DEPRECATION_WARNING=1
