@@ -22,5 +22,6 @@ fi
 
 # misc
 export PROMPT_COMMAND='echo -ne "\033]0;$(basename "$PWD")\007"'
+export DOCKER_HOST="tcp://skynet:2375"
 
 # vim:ft=sh
